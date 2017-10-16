@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangcm.dao.ExamItemDao">
+	<select id = "findAll" resultType="ExamItem">
+		select stime,etime,class_id classid,radionum,radiofen,checknum,checkfen,subject_id subjectid,state from exam_item
+	</select>
+	<insert id = "addExamItem"  useGeneratedKeys="true" keyProperty="id" keyColumn = "id"> 
+		insert into exam_item(stime,etime,class_id,radionum,radiofen,checknum,checkfen,subject_id,state) values
+		(#{stime},#{etime},#{classid},#{radionum},#{radiofen},#{checknum},#{checkfen},#{subjectid},#{state})
+	</insert>
+	<update id = "updateExamItem" parameterType = "ExamItem">
+		update student set stime = #{stime} ,etime = #{etime},class_id = #{classid},radionum = #{radionum},
+		radiofen = #{radiofen},checknum = #{checknum},checkfen = #{checkfen},subject_id = #{subjectid}
+		 where id = #{id}
+	</update>
+	<select id = "findByClassid" resultType = "ExamItem">
+		select * from  exam_item where class_id = #{classid}
+	</select>
+	<select id = "findAllByClassId" resultMap = "ExamItemMap">
+		select * from  exam_item where class_id = #{classid}
+	</select>
+	<delete id = "delete" parameterType = "Long">
+		delete from exam_item where id = #{id}
+	</delete>
+	<resultMap id = "ExamItemMap" type="ExamItem">
+		<association property="subject" column="subject_id" select="cn.zhangcm.dao.SubjectDao.findById"></association>
+		<association property="classes" column="class_id" select="cn.zhangcm.dao.ClassesDao.getClassesById"></association>
+	</resultMap>
+</mapper>

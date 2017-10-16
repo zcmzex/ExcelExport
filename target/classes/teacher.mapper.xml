@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangcm.dao.TeacherDao">
+	<sql id="select">
+		select * from teachers
+	</sql>
+    <select id="findTeacherById" resultType="Teacher">
+    	<include refid="select"/>
+        where id = #{id}
+    </select>
+    <select id="findTeacherByEmail" resultType="Teacher">
+    	<include refid="select"/>
+        where email = #{email}
+    </select>
+    <select id = "findAll" resultType = "Teacher">
+    	<include refid="select"/>
+    </select>
+    <update id = "updatePassword">
+    	update teachers  set pass = #{password}
+    	where id = #{id}
+    </update>
+    <update id = "updateTeacher">
+    	update teachers  set name = #{name},email = #{email},title = #{title},phone = #{phone}
+    	,age = #{age} ,state = #{state}
+    	where id = #{id}
+    </update>
+    <insert id = "addTeacher" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+    	insert into teachers (name,pass,email,title,phone,age,state)
+    	values(#{name},#{pass},#{email},#{title},#{phone},#{age},#{state})
+    </insert>
+    <delete id = "deleteTeacher">
+   	 	delete teachers where id = #{id}
+    </delete>
+</mapper>

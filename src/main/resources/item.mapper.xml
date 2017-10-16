@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangcm.dao.ItemDao">
+	<select id = "findById" resultType="Item">
+		select id,con,istrue,question_id from items
+		where id = #{id}
+	</select>
+	<select id = "findByQuestionId" resultType = "Item">
+		select * from  items
+		where question_id  = #{question_id}
+	</select>
+	<insert id = "add" parameterType="Item"  useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into items (con,istrue,question_id) 
+		values(#{con},#{istrue},#{question_id})
+	</insert>
+	<delete id = "delete" >
+		delete from items where id = #{id}
+	</delete>
+	<update id="update" parameterType = "Item">
+		update items set con = #{con} ,istrue = #{istrue} where id = #{id}
+	</update>
+	
+	<!-- type:代表查询结果类型是Item  -->
+	<resultMap type = "Item" id = "ItemMap">
+	<!-- property:代表这个关联查询的结果对应的item中的属性，也就是Item的属性question  -->
+	<!-- column :代表执行select需要的参数 ，从上面的查询结果中取得 -->
+	<id property = "id" column = "id"/>
+		<association property="question" column="question_id" javaType="Question" select="cn.zhangcm.dao.QuestionDao.findById"/>
+	</resultMap>
+</mapper>

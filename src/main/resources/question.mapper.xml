@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangcm.dao.QuestionDao">
+	<select id = "findById" resultMap= "QuestionMap">
+		select id,con,subject_id,teacher_id,type,stuts from question
+		where id = #{id}
+	</select>
+	<select id = "findBySubjectId" resultMap = "QuestionMap">
+		select * from question where subject_id = #{subject_id}
+	</select>
+	<select id = "findAllByTypeAndSub" resultMap = "QuestionMap2">
+		select * from question where type = #{type} and subject_id = #{subid}
+	</select>
+	<insert id = "addQuestion" parameterType="Question"  useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into question (con,type,subject_id,teacher_id) 
+		values(#{con},#{type},#{subject_id},#{teacher_id})
+	</insert>
+	<delete id = "delete">
+		delete from question where id = #{id}
+	</delete>
+	<update id="update" parameterType = "Question">
+		update  question set con = #{con} ,stuts =#{stuts} where id = #{id}
+	</update>
+	<resultMap id = "QuestionMap" type = "Question">
+	<!-- 多对一查询 -->
+		<id property = "id" column = "id" />
+		<association property = "subject" column = "subject_id" select = "cn.zhangcm.dao.SubjectDao.findById"/>
+		<association property = "teacher" column = "teacher_id" select = "cn.zhangcm.dao.TeacherDao.findTeacherById"/>
+	<!-- 一对多查询 -->
+		<collection property = "list" javaType = "ArrayList" ofType = "Item" 
+			column = "id" select = "cn.zhangcm.dao.ItemDao.findByQuestionId"/>
+	</resultMap>
+		<resultMap id = "QuestionMap2" type = "Question">
+		<id property = "id" column = "id"></id>
+		<collection property = "list" javaType = "ArrayList" ofType = "Item" 
+			column = "id" select = "cn.zhangcm.dao.ItemDao.findByQuestionId"/>
+	</resultMap>
+</mapper>

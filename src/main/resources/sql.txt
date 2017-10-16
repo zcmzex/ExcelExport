@@ -1,0 +1,37 @@
+use exams;
+create table classes (
+	id int auto_increment primary key,
+	name varchar(20) not null,
+	state tinyint default 1,
+	type tinyint,
+	create_id int ,
+	constraint foreign key(create_id) references teachers(id),
+	unique (name)
+);
+use exams;
+create table student(
+	id int auto_increment primary key,
+	name varchar(20) not null,
+	loginnum varchar(30) not null,
+	pass varchar(20) ,
+	sex tinyint ,
+	class_id int,
+	constraint foreign key(class_id) references classes(id)
+);
+考试实体
+	id 考试起止时间 考试班级 考试单选题个数 单选分数 多选个数 分数 考试科目 考试状态
+drop table if exists exam_item;
+create table exam_item(
+	id int auto_increment primary key,
+	stime timestamp ,
+	etime timestamp ,
+	class_id int,
+	radionum int ,
+	radiofen int,
+	checknum int,
+	checkfen int,
+	project_id int,
+	state tinyint,
+	constraint foreign key(class_id) references classes(id),
+	constraint foreign key(project_id) references `subject`(id) 
+);

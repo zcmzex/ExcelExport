@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	 <settings>
+		<!-- 将mybatis的执行过程显示在控制台 -->
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+		<!-- 在用到级联属性的时候才会查询 -->
+		<setting name="lazyLoadingEnabled" value="false" />
+		<!--true： 把所有级联查询都执行 -->
+		<setting name="aggressiveLazyLoading" value="false" />
+		<!-- 将下划线格式转换为驼峰格式： table：user_name java: userName -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		
+	</settings> 
+    <typeAliases>
+        <typeAlias alias="Teacher" type="cn.zhangcm.bean.Teacher"/> 
+         <typeAlias alias="Subject" type="cn.zhangcm.bean.Subject"/> 
+        <typeAlias alias="Question" type="cn.zhangcm.bean.Question"/> 
+        <typeAlias alias="Item" type="cn.zhangcm.bean.Item"/> 
+        <typeAlias alias = "Classes" type = "cn.zhangcm.bean.Classes"/>
+        <typeAlias alias = "Student" type = "cn.zhangcm.bean.Student"/>
+        <typeAlias alias = "ExamItem" type = "cn.zhangcm.bean.ExamItem"/>
+    </typeAliases> 
+
+    <environments default="development">
+        <environment id="development">
+        <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+            <property name="driver" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://127.0.0.1:3306/exams?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8" />
+            <property name="username" value="root"/>
+            <property name="password" value=""/>
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <mappers>
+        <mapper resource="teacher.mapper.xml"/>
+         <mapper resource="subject.mapper.xml"/>
+        <mapper resource="question.mapper.xml"/>
+        <mapper resource="item.mapper.xml"/>
+        <mapper resource = "classes.mapper.xml"/>
+        <mapper resource = "student.mapper.xml"/>
+         <mapper resource = "examitem.mapper.xml"/>
+    </mappers>
+</configuration>
+
+<!--  <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases> 
+        <typeAlias alias="Teacher" type="cn.zhangcm.bean.Teacher"/> 
+        <typeAlias alias="Subject" type="cn.zhangcm.bean.Subject"/> 
+        <typeAlias alias="Question" type="cn.zhangcm.bean.Question"/> 
+        <typeAlias alias="Item" type="cn.zhangcm.bean.Item"/> 
+    </typeAliases> 
+、
+    <environments default="development">
+        <environment id="development">
+        <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+            <property name="driver" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://127.0.0.1:3306/exams?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8" />
+            <property name="username" value="root"/>
+            <property name="password" value=""/>
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <mappers>
+        <mapper resource="teacher.mapper.xml"/>
+        <mapper resource="subject.mapper.xml"/>
+        <mapper resource="question.mapper.xml"/>
+        <mapper resource="item.mapper.xml"/>
+    </mappers>
+
+</configuration>-->

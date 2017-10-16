@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangcm.dao.StudentDao">
+	<select id = "findAllByClassId" parameterType="Long" resultType="Student">
+		select * from student 
+		where class_id = #{classid}
+	</select>
+	<insert id = "addStudent" parameterType = "Student" useGeneratedKeys="true" keyProperty="id" keyColumn = "id"> 
+		insert into student(name,loginnum,pass,sex,class_id,grade,date) values(#{name},#{loginnum},#{pass},#{sex},#{classid},#{grade},#{date});
+	</insert>
+	<update id = "updateStudent" parameterType = "Student">
+		update student set name = #{name},loginnum = #{loginnum},pass=#{pass},
+		sex = #{sex},class_id= #{classid},grade = #{grade} where id = #{id}
+	</update>
+	<select id = "findByNum" parameterType ="String" resultType = "Student">
+		select * from student where loginnum = #{loginnum}
+	</select>
+	<select id = "findById" parameterType ="Long" resultType = "Student">
+		select * from student where id = #{id}
+	</select>
+	<select id = "findByMes" parameterType ="Student" resultType = "Student">
+		select * from student where name like #{name} and loginnum like #{loginnum} and class_id = #{classid}
+	</select>
+</mapper>

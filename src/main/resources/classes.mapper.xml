@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhangcm.dao.ClassesDao">
+	<insert id="addClasses" parameterType="Classes" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
+		insert into classes(name,state,type,create_id)
+		values (#{name},#{state},#{type},#{create_id})
+	</insert>
+	<update id = "updateClasses" parameterType = "Classes">
+		update classes set name = #{name},state = #{state},
+		type = #{type} where id = #{id}
+	</update>
+	<select id ="getClassesById" resultMap="ClassesMap" parameterType = "Long">
+		select * from classes 
+		where id = #{id}
+	</select>
+	<select id ="getAll" resultType = "Classes" >
+		select * from classes
+	</select>
+	<resultMap id="ClassesMap" type="Classes" >
+		<collection property="list" column="id" javaType="ArrayList" ofType="Student" select="cn.zhangcm.dao.StudentDao.findAllByClassId"/>
+	</resultMap>
+</mapper>
